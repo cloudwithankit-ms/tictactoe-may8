@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play Tic Tac Toe game online - A classic game of strategy">
+    <meta name="theme-color" content="#667eea">
     <title>Tic Tac Toe</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -14,13 +20,25 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: Arial, sans-serif;
         }
-        .container {
+
+        main {
             text-align: center;
         }
+
         h1 {
             color: white;
             margin-bottom: 20px;
+            font-size: 2.5rem;
         }
+
+        .status {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 20px;
+            min-height: 30px;
+            font-weight: 500;
+        }
+
         .board {
             display: grid;
             grid-template-columns: repeat(3, 100px);
@@ -29,7 +47,11 @@
             background: #333;
             padding: 5px;
             border-radius: 5px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
+
         .cell {
             width: 100px;
             height: 100px;
@@ -40,17 +62,35 @@
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s;
+            color: #333;
         }
+
         .cell:hover {
             background: #f0f0f0;
+            transform: scale(1.05);
         }
-        .status {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 20px;
-            min-height: 30px;
+
+        .cell:active {
+            transform: scale(0.95);
         }
-        .reset-btn {
+
+        .cell.x {
+            color: #667eea;
+        }
+
+        .cell.o {
+            color: #764ba2;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .reset-btn,
+        .info-btn {
             padding: 10px 20px;
             font-size: 16px;
             background: #48bb78;
@@ -60,28 +100,80 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .reset-btn:hover {
+
+        .reset-btn:hover,
+        .info-btn:hover {
             background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn:active,
+        .info-btn:active {
+            transform: translateY(0);
+        }
+
+        .info-btn {
+            background: #4299e1;
+        }
+
+        .info-btn:hover {
+            background: #3182ce;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .board {
+                grid-template-columns: repeat(3, 80px);
+            }
+
+            .cell {
+                width: 80px;
+                height: 80px;
+                font-size: 28px;
+            }
+
+            .reset-btn,
+            .info-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cell {
+                transition: none;
+            }
+
+            .cell:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <main>
         <h1>Tic Tac Toe</h1>
-        <div class="status" id="status">Player X's turn</div>
-        <div class="board" id="board">
-            <button class="cell" data-index="0"></button>
-            <button class="cell" data-index="1"></button>
-            <button class="cell" data-index="2"></button>
-            <button class="cell" data-index="3"></button>
-            <button class="cell" data-index="4"></button>
-            <button class="cell" data-index="5"></button>
-            <button class="cell" data-index="6"></button>
-            <button class="cell" data-index="7"></button>
-            <button class="cell" data-index="8"></button>
+        <div role="status" aria-live="polite" class="status" id="status">Player X's turn</div>
+        <div class="board" id="board" role="grid" aria-label="Tic Tac Toe game board">
+            <button class="cell" data-index="0" aria-label="Cell 1"></button>
+            <button class="cell" data-index="1" aria-label="Cell 2"></button>
+            <button class="cell" data-index="2" aria-label="Cell 3"></button>
+            <button class="cell" data-index="3" aria-label="Cell 4"></button>
+            <button class="cell" data-index="4" aria-label="Cell 5"></button>
+            <button class="cell" data-index="5" aria-label="Cell 6"></button>
+            <button class="cell" data-index="6" aria-label="Cell 7"></button>
+            <button class="cell" data-index="7" aria-label="Cell 8"></button>
+            <button class="cell" data-index="8" aria-label="Cell 9"></button>
         </div>
-        <button class="reset-btn" onclick="resetGame()">Reset Game</button>
-    </div>
+        <div class="button-group">
+            <button class="reset-btn" id="resetBtn" aria-label="Reset the game">Reset Game</button>
+            <button class="info-btn" id="infoBtn" aria-label="Show game information">How to Play</button>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
